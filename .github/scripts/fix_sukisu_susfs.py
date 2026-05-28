@@ -400,6 +400,22 @@ def patch_selinux_hide(path, changed_files):
         "bool ksu_selinux_hide_running __read_mostly = false;",
     )
     text = text.replace(
+        "static bool ksu_selinux_hide_enabled __read_mostly = false;",
+        "bool ksu_selinux_hide_enabled __read_mostly = false;",
+    )
+    text = text.replace(
+        "static DEFINE_STATIC_KEY_FALSE(fake_status_initialize_key);",
+        "DEFINE_STATIC_KEY_FALSE(fake_status_initialize_key);",
+    )
+    text = text.replace(
+        "static struct page *fake_status = NULL;",
+        "struct page *fake_status = NULL;",
+    )
+    text = text.replace(
+        "static void initialize_fake_status()",
+        "void initialize_fake_status()",
+    )
+    text = text.replace(
         "static int security_context_to_sid_with_policy(",
         "int security_context_to_sid_with_policy(",
     )
@@ -675,6 +691,10 @@ def verify(ksu_dir):
         ksu_dir / "feature/selinux_hide.c": (
             "struct selinux_state fake_state;",
             "bool ksu_selinux_hide_running __read_mostly",
+            "bool ksu_selinux_hide_enabled __read_mostly",
+            "DEFINE_STATIC_KEY_FALSE(fake_status_initialize_key);",
+            "struct page *fake_status = NULL;",
+            "void initialize_fake_status()",
             "int security_context_to_sid_with_policy(",
             "int security_sid_to_context_with_policy(",
         ),
@@ -688,6 +708,10 @@ def verify(ksu_dir):
 
     selinux_hide = (ksu_dir / "feature/selinux_hide.c").read_text()
     forbidden = (
+        "static bool ksu_selinux_hide_enabled",
+        "static DEFINE_STATIC_KEY_FALSE(fake_status_initialize_key)",
+        "static struct page *fake_status",
+        "static void initialize_fake_status()",
         "static int security_context_to_sid_with_policy(",
         "static int security_sid_to_context_with_policy(",
         "static void __nocfi security_compute_av_user_with_policy(",
