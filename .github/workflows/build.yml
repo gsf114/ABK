@@ -382,7 +382,7 @@ jobs:
           branch_input="${{ inputs.ksu_branch }}"
           custom_ref_input="${{ inputs.custom_ref }}"
           OFFICIAL_STABLE_REF="3f388ef137c78e1ca0c92c0ada3b8717cdcc4302"
-          SUKISU_STABLE_REF="c5af9eadac43b1f0b9751471be78e6eef681554b"
+          SUKISU_STABLE_REF="3f602b55d89187268c8bfd2cf549667ed0ad69c6"
           RESUKISU_STABLE_REF="b6706363b95525acd4007da19edadb1d41b2ea27"
           SUKISU_REPO="SukiSU-Ultra/SukiSU-Ultra"
 
